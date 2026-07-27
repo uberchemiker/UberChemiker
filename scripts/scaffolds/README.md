@@ -1,6 +1,6 @@
 # Scripts
 
-## draw_scaf.py
+## draw_scaffolds.py
  
 Extracts Murcko scaffolds from SMILES columns in a CSV and draws them as
 A4 PNG grids. Also saves a per-column CSV with scaffold counts.
