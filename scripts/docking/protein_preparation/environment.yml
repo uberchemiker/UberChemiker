@@ -1,0 +1,37 @@
+# Окружение conda для пайплайна подготовки рецепторов.
+# Установка:
+#     conda env create -f environment.yml
+#     conda activate receptor_prep
+#
+# Если какой-то пакет не встанет из conda (бывает с meeko/vina на части
+# платформ) — поставьте его через pip внутри активированного окружения,
+# см. README.md, раздел «Установка окружения» -> «Запасной путь».
+#
+# После установки ОБЯЗАТЕЛЬНО проверьте:  python check_setup.py
+
+name: receptor_prep
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - python=3.9          # Meeko стабильно работает на 3.9
+  - numpy
+  - gemmi               # чтение .pdb/.cif, геометрия
+  - rdkit               # RMSD в редокинг-валидации
+  - openbabel           # fallback-сборка и конвертации
+  - pdbfixer            # достройка боковых цепей (Стадия 2.5)
+  - openmm              # нужен для PDBFixer
+  - propka              # pKa для His-таутомеризации
+  - pdb2pqr             # тянет propka, опционально
+  # --- эти могут потребовать pip, если conda не найдёт (см. README) ---
+  - pip
+  - pip:
+      - meeko           # подготовка рецептора/лиганда (mk_prepare_*.py)
+      # AutoDock Vina:
+      #   нужна ТОЛЬКО для validate_redock.py.
+      #   Python-биндинги: pip install vina
+      #   НО командной строки 'vina' они могут не дать — тогда скачайте
+      #   бинарник со страницы релизов AutoDock Vina и положите в PATH.
+      # - vina
